@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Risk Management System - FAQs</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <img src="C:\Users\vardh\Downloads\Gohn_s_bakery_studio-removebg-preview.png" width="100" height="100">
+            HRMS Portal
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="banner">
+            <h1>Frequently Asked Questions</h1>
+            <a href="HTML1.html" target="_blank"></a>
+            <p>Find answers to common questions about the Health Risk Management System</p>
+        </div>
+
+        <div class="faq-filter">
+            <label for="faq-category">Filter by Category:</label>
+            <select id="faq-category">
+                <option value="all">All Questions</option>
+                <option value="general">General System Information</option>
+                <option value="data">Data and Technology</option>
+                <option value="features">Features and Usage</option>
+                <option value="health">Health and Privacy Concerns</option>
+                <option value="technical">Technical Questions</option>
+            </select>
+        </div>
+
+        <div class="faq-section" id="general-info">
+            <h2>General System Information</h2>
+            <div class="faq-item">
+                <div class="faq-question">What is the Health Risk Management System?</div>
+                <div class="faq-answer">
+                    The Health Risk Management System is a comprehensive platform that evaluates your potential health risks based on personal health parameters and helps you find suitable hospitals that accept your insurance policy. It also allows you to compare different insurance policies and generates detailed health reports for your reference.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">How does the risk score evaluation work?</div>
+                <div class="faq-answer">
+                    The risk score evaluation uses machine learning algorithms trained on both Kaggle datasets and custom-collected data. It analyzes the information you provide about your lifestyle habits, medical history, and family chronic disease history to calculate a risk score that indicates your potential for developing certain health issues.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">What parameters are used to calculate my risk score?</div>
+                <div class="faq-answer">
+                    Three main parameters are used:
+                    <ul>
+                        <li>Lifestyle habits (such as diet, exercise, smoking, alcohol consumption)</li>
+                        <li>Medical history (past illnesses, surgeries, current conditions)</li>
+                        <li>Family chronic disease history (hereditary conditions and diseases among close relatives)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">How accurate is the risk score prediction?</div>
+                <div class="faq-answer">
+                    The risk score is based on statistical models trained on extensive datasets. While it provides a good indication of potential health risks, it should be used as a screening tool rather than a definitive medical diagnosis. Always consult healthcare professionals for proper medical advice.
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-section" id="data-tech">
+            <h2>Data and Technology</h2>
+            <div class="faq-item">
+                <div class="faq-question">What datasets were used to develop the risk assessment model?</div>
+                <div class="faq-answer">
+                    The model was trained using:
+                    <ul>
+                        <li>Public healthcare datasets from Kaggle</li>
+                        <li>Custom datasets collected through Google Forms surveys</li>
+                    </ul>
+                    These datasets contain anonymized health information that helps the system identify patterns and correlations between lifestyle factors and health outcomes.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">How does the hospital visualization feature work?</div>
+                <div class="faq-answer">
+                    The system uses Tableau, a business intelligence tool, to visualize hospitals in your residing city that accept your insurance policy. The visualization displays relevant information such as hospital locations, specialties, ratings, and covered services under your policy.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">What BI tools are used for hospital visualization?</div>
+                <div class="faq-answer">
+                    Tableau is the primary business intelligence tool used for visualizing hospital data and insurance coverage information. It processes custom datasets uniquely fetched for each city in association with the presence of insurance policy companies.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">How is the custom dataset for hospital information updated?</div>
+                <div class="faq-answer">
+                    The hospital dataset is custom-built and regularly updated by collecting information directly from hospitals and insurance providers. This ensures that you receive the most current information about hospital services and insurance coverage.
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-section" id="features-usage">
+            <h2>Features and Usage</h2>
+            <div class="faq-item">
+                <div class="faq-question">Can I view hospitals that accept my insurance policy?</div>
+                <div class="faq-answer">
+                    Yes, after inputting your insurance policy provider, the system will display a visualization of hospitals in your city that accept your policy. This helps you make informed decisions during emergencies or when planning medical care.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Can I compare different insurance policies?</div>
+                <div class="faq-answer">
+                    Yes, the system allows you to compare different insurance companies based on various aspects according to your specific needs, such as coverage types, premium costs, hospital networks, and claim settlement ratios.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">What information is included in the generated reports?</div>
+                <div class="faq-answer">
+                    The reports include:
+                    <ul>
+                        <li>Your risk score and its interpretation</li>
+                        <li>Breakdown of risk factors based on your lifestyle, medical history, and family history</li>
+                        <li>List of hospitals accepting your insurance policy</li>
+                        <li>Recommendations for health improvements</li>
+                        <li>Comparative analysis of insurance policies (if requested)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">How can I access my previous risk assessments?</div>
+                <div class="faq-answer">
+                    Your risk assessment history is stored in your user profile. You can access previous assessments by logging into your account and navigating to the "Assessment History" section.
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-section" id="health-privacy">
+            <h2>Health and Privacy Concerns</h2>
+            <div class="faq-item">
+                <div class="faq-question">Is my medical data kept private and secure?</div>
+                <div class="faq-answer">
+                    Yes, all personal and medical information is encrypted and stored securely following healthcare data protection standards. Your data is never shared with third parties without your explicit consent.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">How often should I update my risk assessment?</div>
+                <div class="faq-answer">
+                    It's recommended to update your risk assessment annually or whenever significant changes occur in your health status, lifestyle habits, or family health history.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Can the system predict specific health conditions?</div>
+                <div class="faq-answer">
+                    The system identifies potential risk areas rather than diagnosing specific conditions. It highlights categories of health concerns you may be susceptible to based on your input data, but does not provide medical diagnoses.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">What should I do if my risk score is high?</div>
+                <div class="faq-answer">
+                    If your risk score is high, consider:
+                    <ul>
+                        <li>Consulting with a healthcare professional</li>
+                        <li>Reviewing the specific risk factors highlighted in your report</li>
+                        <li>Making recommended lifestyle modifications</li>
+                        <li>Setting up regular health screenings for early detection of potential issues</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">How does family chronic disease history impact my risk score?</div>
+                <div class="faq-answer">
+                    Family health history significantly influences your risk score as many conditions have genetic components. The system analyzes patterns of diseases in your family to identify hereditary risks that might affect you.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Are lifestyle recommendations provided based on my risk score?</div>
+                <div class="faq-answer">
+                    Yes, the system provides personalized lifestyle recommendations based on your risk assessment. These may include suggestions for dietary changes, exercise routines, preventive screenings, and other health-promoting behaviors.
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-section" id="technical">
+            <h2>Technical Questions</h2>
+            <div class="faq-item">
+                <div class="faq-question">Can I share my risk assessment report with my doctor?</div>
+                <div class="faq-answer">
+                    Yes, reports are designed to be easily shared with healthcare providers. You can download your report as a PDF or directly share it through the system's secure sharing feature.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Is the system available as a mobile application?</div>
+                <div class="faq-answer">
+                    Yes, the Health Risk Management System is available as both a web application and a mobile app for iOS and Android devices, allowing you to access your health information on the go.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>© 2025 Health Risk Management System | All Rights Reserved</p>
+        <p>Privacy Policy | Terms of Service | Contact Support</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

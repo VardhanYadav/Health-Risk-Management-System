@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Risk Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Loading Spinner -->
+    <div class="spinner" id="loadingSpinner">
+        <div class="spinner-inner"></div>
+    </div>
+    
+    <!-- Notification Toast -->
+    <div class="toast" id="notificationToast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Welcome to HRMS Portal!</span>
+    </div>
+    
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 style="color: var(--hospital-blue); margin-bottom: 20px; text-align: center;">Login to HRMS</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="Enter your username" required>
+                    <i class="fas fa-user input-icon"></i>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                    <i class="fas fa-lock input-icon"></i>
+                </div>
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+                <div class="form-footer">
+                    <p>Don't have an account? <a href="#" id="registerLink">Register here</a></p>
+                    <p><a href="#">Forgot password?</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Registration Modal -->
+    <div class="modal" id="registrationModal">
+        <div class="registration-content">
+            <span class="close-modal">&times;</span>
+            <h2 style="color: var(--hospital-blue); margin-bottom: 20px; text-align: center;">Create Your Account</h2>
+            <form id="registrationForm">
+                <div class="form-group">
+                    <label for="reg-name">Full Name</label>
+                    <input type="text" id="reg-name" placeholder="Enter your full name" required>
+                    <i class="fas fa-user input-icon"></i>
+                </div>
+                <div class="form-group">
+                    <label for="reg-email">Email</label>
+                    <input type="email" id="reg-email" placeholder="Enter your email" required>
+                    <i class="fas fa-envelope input-icon"></i>
+                </div>
+                <div class="form-group">
+                    <label for="reg-username">Username</label>
+                    <input type="text" id="reg-username" placeholder="Choose a username" required>
+                    <i class="fas fa-at input-icon"></i>
+                </div>
+                <div class="form-group">
+                    <label for="reg-password">Password</label>
+                    <input type="password" id="reg-password" placeholder="Create a password" required>
+                    <i class="fas fa-key input-icon"></i>
+                </div>
+                <div class="form-group">
+                    <label for="reg-confirm">Confirm Password</label>
+                    <input type="password" id="reg-confirm" placeholder="Confirm your password" required>
+                    <i class="fas fa-key input-icon"></i>
+                </div>
+                <div class="form-group">
+                    <label for="reg-role">Role</label>
+                    <select id="reg-role" required>
+                        <option value="">Select your role</option>
+                        <option value="doctor">Doctor</option>
+                        <option value="nurse">Nurse</option>
+                        <option value="admin">Administrator</option>
+                        <option value="other">Other Healthcare Professional</option>
+                    </select>
+                    <i class="fas fa-user-tag input-icon"></i>
+                </div>
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-user-plus"></i> Register
+                </button>
+                <div class="form-footer">
+                    <p>Already have an account? <a href="#" id="loginFromRegister">Login here</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Full-screen risk calculator -->
+    <div class="fullscreen-container" id="fullscreenRiskCalc">
+        <div class="fullscreen-header">
+            <h3><i class="fas fa-calculator"></i> Risk Assessment Calculator</h3>
+            <button class="close-fullscreen" id="closeFullscreen">
+                <i class="fas fa-times"></i> Close
+            </button>
+        </div>
+        <iframe src="https://vy1691-hrms-risk-score-calculator.hf.space/" class="fullscreen-iframe"></iframe>
+    </div>
+
+    <!-- Report Modal -->
+    <div class="modal" id="reportModal">
+        <div class="modal-content" style="max-width: 800px;">
+            <span class="close-modal">&times;</span>
+            <h2 style="color: var(--hospital-blue); margin-bottom: 20px; text-align: center;">
+                <i class="fas fa-file-pdf"></i> Insurance Policy Comparison Report
+            </h2>
+            <div class="report-container">
+            <div class="report-header" id="reportHeader">
+                <div class="report-meta">
+                    <div><strong>Generated:</strong> <span id="reportDate"></span></div>
+                    <div><strong>Policy Type:</strong> <span id="reportPolicyType"></span></div>
+                    <div><strong>Coverage Amount:</strong> <span id="reportCoverage"></span></div>
+                    <div><strong>Age Range:</strong> <span id="reportAge"></span></div>
+                </div>
+                </div>
+            </div>
+            <div class="report-body" id="reportBody">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+            <div class="report-footer">
+                <button class="btn btn-primary" id="downloadReportBtn">
+                    <i class="fas fa-download"></i> Download PDF
+                </button>
+                <button class="btn btn-outline" id="printReportBtn">
+                    <i class="fas fa-print"></i> Print Report
+                </button>
+                <button class="btn btn-outline" id="emailReportBtn">
+                    <i class="fas fa-envelope"></i> Email Report
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <header id="mainHeader">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="C:\Users\vardh\Downloads\HRMS\Exppo\Gohn_s_bakery_studio-removebg-preview.png" width="100" height="100">
+                    <span>HRMS Portal</span>
+                </div>
+                <div class="nav-links">
+                    <a href="#about">About</a>
+                    <a href="#services">Services</a>
+                    <a href="#analysis-tools">Tools</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <a href="#" class="header-cta" id="loginBtn">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </a>
+            </div>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container hero-content">
+            <h1 class="floating floating-1">Advanced Health Risk Management Solutions</h1>
+            <p class="floating floating-2">Comprehensive insurance analytics and personalized risk assessment tools for healthcare professionals and patients</p>
+            <div class="hero-btns floating floating-3">
+                <a href="#analysis-tools" class="btn btn-primary">
+                    <i class="fas fa-chart-line"></i> Explore Tools
+                </a>
+                <a href="#about" class="btn btn-outline">
+                    <i class="fas fa-info-circle"></i> Learn More
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <div class="container">
+        <!-- About Section -->
+        <section id="about" class="about-section">
+            <h2 class="section-title">About HRMS Platform</h2>
+            <p class="section-description">The Health Risk Management System (HRMS) is a comprehensive platform designed to bridge the gap between healthcare providers and insurance analytics. Our system empowers medical professionals with data-driven insights to optimize patient care and financial outcomes.</p>
+            
+            <div class="mission-card">
+                <h3><i class="fas fa-bullseye"></i> Our Mission</h3>
+                <p>To revolutionize healthcare risk management through innovative technology that transforms complex insurance data into actionable insights, ultimately improving patient outcomes while reducing financial risks for healthcare institutions.</p>
+            </div>
+            
+            <h3>Our Story</h3>
+            <p>Founded in 2025 by Vardhan Yadav and Apoorv Khanna visionary for HRMS, HRMS was born from the recognition that healthcare providers needed better tools to navigate the increasingly complex insurance landscape.</p>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-users"></i></div>
+                    <h4>Expert Team</h4>
+                    <p>Our team combines decades of healthcare, insurance, and data science expertise to deliver unparalleled insights.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-lock"></i></div>
+                    <h4>Secure Platform</h4>
+                    <p>HIPAA-compliant infrastructure with enterprise-grade security to protect sensitive patient data.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-lightbulb"></i></div>
+                    <h4>Innovative Solutions</h4>
+                    <p>Cutting-edge AI and machine learning models trained on millions of healthcare data points.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Services Section -->
+        <section id="services" class="services-section">
+            <h2 class="section-title">Our Services</h2>
+            <p class="section-description">HRMS offers a comprehensive suite of tools and services designed to meet the unique needs of healthcare providers</p>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');"></div>
+                    <div class="service-content">
+                        <h3>Insurance Analytics</h3>
+                        <p>Comprehensive dashboards and reports showing insurance coverage patterns, claim approval rates, and financial trends specific to your specialty and location.</p>
+                        <a href="#insurance" class="service-link">Explore Analytics <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1579684453423-f84349ef60b0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2089&q=80');"></div>
+                    <div class="service-content">
+                        <h3>Risk Assessment</h3>
+                        <p>AI-powered tools to evaluate individual patient risk profiles and generate personalized insurance recommendations based on medical history and demographics.</p>
+                        <a href="#risk" class="service-link">Assess Risk <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');"></div>
+                    <div class="service-content">
+                        <h3>Claims Optimization</h3>
+                        <p>Predictive analytics to identify potential claim denials before submission and recommendations to maximize approval rates and reduce reimbursement delays.</p>
+                        <a href="#policy-comparison" class="service-link">Compare Policies <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Analysis Tools Section -->
+        <section id="analysis-tools">
+            <h2 class="section-title">Analysis Tools</h2>
+            <p class="section-description">Access our powerful suite of analytical tools designed specifically for healthcare professionals</p>
+            
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="insurance">Insurance Analytics</button>
+                <button class="tab-btn" data-tab="risk">Risk Assessment</button>
+                <button class="tab-btn" data-tab="policy-comparison">
+                    <i class="fas fa-balance-scale"></i> Compare Policies
+                </button>
+            </div>
+            
+            <div class="tab-content">
+                <div class="tab-pane active" id="insurance">
+                    <div class="dashboard-container">
+                        <div class="dashboard-header">
+                            <h3><i class="fas fa-chart-bar"></i> Insurance Coverage Analytics</h3>
+                            <div class="dashboard-toolbar">
+                                <button class="tooltip"><i class="fas fa-download"></i> Export<span class="tooltiptext">Download this dashboard as PDF or Excel</span></button>
+                                <button class="tooltip"><i class="fas fa-filter"></i> Filters<span class="tooltiptext">Apply filters to customize the view</span></button>
+                            </div>
+                        </div>
+                        <div class='tableauPlaceholder' id='viz1741508904979' style='position: relative'>
+                            <noscript>
+                                <a href='#'>
+                                    <img alt='Dashboard 1 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;HR&#47;HRMS_Viz&#47;Dashboard1&#47;1_rss.png' style='border: none' />
+                                </a>
+                            </noscript>
+                            <object class='tableauViz'  style='display:none;'>
+                                <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> 
+                                <param name='embed_code_version' value='3' /> 
+                                <param name='site_root' value='' />
+                                <param name='name' value='HRMS_Viz&#47;Dashboard1' />
+                                <param name='tabs' value='no' /><param name='toolbar' value='yes' />
+                                <param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;HR&#47;HRMS_Viz&#47;Dashboard1&#47;1.png' /> 
+                                <param name='animate_transition' value='yes' />
+                                <param name='display_static_image' value='yes' />
+                                <param name='display_spinner' value='yes' />
+                                <param name='display_overlay' value='yes' />
+                                <param name='display_count' value='yes' />
+                                <param name='language' value='en-US' />
+                            </object>
+                        </div>                
+                        
+                    </div>
+                    
+                    <div class="mission-card">
+                        <h3><i class="fas fa-lightbulb"></i> How to Use This Data</h3>
+                        <p>This dashboard updates in real-time with the latest insurance market data. Use the filters to view statistics specific to your specialty, location, or patient demographics. Track claim approval rates by insurer, identify coverage gaps in your patient population, and optimize your billing processes based on historical trends.</p>
+                    </div>
+                </div>
+                
+                <div class="tab-pane" id="risk">
+                    <div class="dashboard-container">
+                        <div class="dashboard-header">
+                            <h3><i class="fas fa-clipboard-check"></i> Risk Assessment Calculator</h3>
+                            <div class="dashboard-toolbar">
+                                <button id="expandRiskCalc" class="expand-btn">
+                                    <i class="fas fa-expand"></i> Full Screen
+                                </button>
+                                <button class="tooltip"><i class="fas fa-history"></i> History<span class="tooltiptext">View your previous risk assessments</span></button>
+                                <button class="tooltip"><i class="fas fa-question-circle"></i> Help<span class="tooltiptext">Get help with using this tool</span></button>
+                            </div>
+                        </div>
+                        <div class="gradio-container-full">
+                            <iframe src="https://vy1691-hrms-risk-score-calculator.hf.space/" frameborder="0" style="width:100%;height:100%;"></iframe>
+                        </div>
+                    </div>
+                    
+                    <div class="mission-card">
+                        <h3><i class="fas fa-robot"></i> About Our Algorithm</h3>
+                        <p>This tool utilizes machine learning trained on millions of healthcare insurance cases to assess various medical, demographic, and financial factors. The algorithm considers diagnosis codes, treatment plans, age, location, and insurance history to generate a comprehensive risk analysis and coverage recommendations.</p>
+                    </div>
+                </div>
+                
+                <!-- NEW POLICY COMPARISON SECTION STARTS HERE -->
+                <div class="tab-pane" id="policy-comparison">
+                    <div class="dashboard-container">
+                        <div class="dashboard-header">
+                            <h3><i class="fas fa-balance-scale"></i> Compare Insurance Policies</h3>
+                            <div class="dashboard-toolbar">
+                                <button id="generateReportBtn" class="expand-btn">
+                                    <i class="fas fa-file-pdf"></i> Generate Report
+                                </button>
+                                <button class="tooltip" id="resetSelectionBtn">
+                                    <i class="fas fa-undo"></i> Reset
+                                    <span class="tooltiptext">Clear all selections</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="comparison-container">
+                            <div class="comparison-controls">
+                                <div class="form-group">
+                                    <label for="policyType">Policy Type</label>
+                                    <select id="policyType" class="form-control">
+                                        <option value="term">Term Insurance</option>
+                                        <option value="whole">Whole Life Insurance</option>
+                                        <option value="endowment">Endowment Plans</option>
+                                        <option value="ulip">ULIPs</option>
+                                        <option value="health">Health Insurance</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="coverageAmount">Desired Coverage Amount (₹)</label>
+                                    <input type="range" id="coverageAmount" min="500000" max="20000000" step="500000" value="5000000">
+                                    <div class="range-value">
+                                        <span id="coverageValue">50,00,000</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="ageRange">Your Age Range</label>
+                                    <select id="ageRange" class="form-control">
+                                        <option value="18-25">18-25 years</option>
+                                        <option value="26-35">26-35 years</option>
+                                        <option value="36-45">36-45 years</option>
+                                        <option value="46-55">46-55 years</option>
+                                        <option value="56-65">56-65 years</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="comparison-grid">
+                                <div class="comparison-header">
+                                    <div class="header-item">Insurance Company</div>
+                                    <div class="header-item">Premium Range (Monthly)</div>
+                                    <div class="header-item">Coverage Limit</div>
+                                    <div class="header-item">Claim Settlement Ratio</div>
+                                    <div class="header-item">Customer Rating</div>
+                                    <div class="header-item">Select</div>
+                                </div>
+                                
+                                <!-- LIC -->
+                                <div class="comparison-row" data-company="lic">
+                                    <div class="row-item">
+                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlE3xnOPiPJ3SuoNbYru_UHW1R7WXPI9ojcw&s" width ='50' height='50'>
+                                        <span>LIC</span>
+                                    </div>
+                                    <div class="row-item">₹1,000 - ₹10,000</div>
+                                    <div class="row-item">No specific limit</div>
+                                    <div class="row-item">98.31%</div>
+                                    <div class="row-item">
+                                        <div class="rating">
+                                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                                            <span>4.5/5</span>
+                                        </div>
+                                    </div>
+                                    <div class="row-item">
+                                        <input type="checkbox" class="compare-checkbox" id="compare-lic">
+                                        <label for="compare-lic">Compare</label>
+                                    </div>
+                                </div>
+                                
+                                <!-- HDFC Life -->
+                                <div class="comparison-row" data-company="hdfc">
+                                    <div class="row-item">
+                                        <img src="https://play-lh.googleusercontent.com/POGVZhNvSh05yA01H2VTlElv0Mw6r4R7hj9w7DaOvJVgiGoi0Fcawi02yITkyMT1zwqO" width ='50' height='50'>
+                                        <span>HDFC Life</span>
+                                    </div>
+                                    <div class="row-item">₹500 - ₹8,000</div>
+                                    <div class="row-item">Up to ₹20 Cr</div>
+                                    <div class="row-item">99.04%</div>
+                                    <div class="row-item">
+                                        <div class="rating">
+                                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                                            <span>4.5/5</span>
+                                        </div>
+                                    </div>
+                                    <div class="row-item">
+                                        <input type="checkbox" class="compare-checkbox" id="compare-hdfc">
+                                        <label for="compare-hdfc">Compare</label>
+                                    </div>
+                                </div>
+                                
+                                <!-- ICICI Prudential -->
+                                <div class="comparison-row" data-company="icici">
+                                    <div class="row-item">
+                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTi3aJpgJ2xldshLEVzmXv2lX7z2NFFmykjg&s" width ='50' height='50'>
+                                        <span>ICICI Prudential</span>
+                                    </div>
+                                    <div class="row-item">₹600 - ₹9,500</div>
+                                    <div class="row-item">Up to ₹25 Cr</div>
+                                    <div class="row-item">98.74%</div>
+                                    <div class="row-item">
+                                        <div class="rating">
+                                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                                            <span>4.2/5</span>
+                                        </div>
+                                    </div>
+                                    <div class="row-item">
+                                        <input type="checkbox" class="compare-checkbox" id="compare-icici">
+                                        <label for="compare-icici">Compare</label>
+                                    </div>
+                                </div>
+                                
+                                <!-- SBI Life -->
+                                <div class="comparison-row" data-company="sbi">
+                                    <div class="row-item">
+                                        <img src="https://yt3.googleusercontent.com/rUWPJAjTrYmNiJjX2D4whywLrdgJUoSxnkk-QglB2zBFgMK2Z2hRGEr-XCrlAYaGxQfh3l1_cg0=s900-c-k-c0x00ffffff-no-rj" width ='50' height='50'>
+                                        <span>SBI Life</span>
+                                    </div>
+                                    <div class="row-item">₹700 - ₹7,500</div>
+                                    <div class="row-item">Up to ₹15 Cr</div>
+                                    <div class="row-item">98.03%</div>
+                                    <div class="row-item">
+                                        <div class="rating">
+                                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                                            <span>4.1/5</span>
+                                        </div>
+                                    </div>
+                                    <div class="row-item">
+                                        <input type="checkbox" class="compare-checkbox" id="compare-sbi">
+                                        <label for="compare-sbi">Compare</label>
+                                    </div>
+                                </div>
+                                
+                                <!-- Max Life -->
+                                <div class="comparison-row" data-company="max">
+                                    <div class="row-item">
+                                        <img src="https://bsmedia.business-standard.com/_media/bs/img/article/2021-05/21/full/20210521150122.jpg" width ='50' height='50'>
+                                        <span>Max Life</span>
+                                    </div>
+                                    <div class="row-item">₹800 - ₹12,000</div>
+                                    <div class="row-item">Up to ₹30 Cr</div>
+                                    <div class="row-item">99.35%</div>
+                                    <div class="row-item">
+                                        <div class="rating">
+                                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                                            <span>4.6/5</span>
+                                        </div>
+                                    </div>
+                                    <div class="row-item">
+                                        <input type="checkbox" class="compare-checkbox" id="compare-max">
+                                        <label for="compare-max">Compare</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="comparison-results" id="comparisonResults">
+                                <h4><i class="fas fa-chart-bar"></i> Comparison Results</h4>
+                                <p>Select at least two policies to compare them side by side.</p>
+                                <div class="results-grid" id="resultsGrid"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- NEW POLICY COMPARISON SECTION ENDS HERE -->
+            </div>
+        </section>
+        
+        <!-- Getting Started Section -->
+        <section class="getting-started">
+            <h2 class="section-title">Getting Started</h2>
+            <p class="section-description">Follow these simple steps to begin using HRMS and transform your healthcare risk management</p>
+            
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h4>Create Your Account</h4>
+                    <p>Register for an HRMS account by providing basic information about your practice and role in healthcare.</p>
+                </div>
+            </div>
+            
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h4>Explore the Dashboard</h4>
+                    <p>Familiarize yourself with the insurance analytics dashboard and customize it for your specialty.</p>
+                </div>
+            </div>
+            
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h4>Run Your First Risk Assessment</h4>
+                    <p>Use our risk assessment tool with a sample patient to understand how it works.</p>
+                </div>
+            </div>
+            
+            <div class="step-card">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h4>Integrate With Your Practice</h4>
+                    <p>Connect HRMS with your EHR system or upload patient data to get personalized insights.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Contact Section -->
+        <section id="contact" class="contact-section">
+            <div class="contact-content">
+                <h3>Contact Our Team</h3>
+                <p>Have questions or need assistance with our platform? Our support team is available to help you get the most out of HRMS.</p>
+                
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>9140683474</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>HRMSportal@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>S.R.M. Institute Of Science And Technology</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>HRMS Portal</h4>
+                    <p>Advanced health risk management solutions for healthcare providers and institutions.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.linkedin.com/in/vardhan-yadav-58498324a/" target="_blank">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#about"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                        <li><a href="#services"><i class="fas fa-chevron-right"></i> Services</a></li>
+                        <li><a href="#analysis-tools"><i class="fas fa-chevron-right"></i> Tools</a></li>
+                        <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li>
+                            <a href="https://drive.google.com/drive/folders/1Z_A81E4EcRciAC0wXf66laGHISNv2do6?usp=sharing" target="_blank">
+                                <i class="fas fa-chevron-right"></i> Documentation
+                            </a>
+                        </li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> API Access</a></li>
+                        <li>
+                            <a href="https://colab.research.google.com/drive/13BzK2SzmnienzxPmWCH2XU3cE0VStF8A?usp=sharing" target="_blank">
+                                <i class="fas fa-chevron-right"></i> Training
+                            </a></li>
+                        <li><a href="FAQ.html" target="_blank"><i class="fas fa-chevron-right"></i> FAQ</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="tel:9140683474"><i class="fas fa-phone"></i> 9140683474</a></li>
+                        <li><a href="mailto:HRMSportal@gmail.com"><i class="fas fa-envelope"></i> HRMSportal@gmail.com</a></li>
+                        <li><a href="https://www.srmist.edu.in/" target="_blank"><i class="fas fa-map-marker-alt"></i> S.R.M. Institute Of Science And Technology</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Health Risk Management System. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+    
+    <div class="scroll-indicator" id="scrollTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+    
+    
+    <script src="scripts.js"></script>
+</body>
+</html>
